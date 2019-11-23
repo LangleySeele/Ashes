@@ -25,6 +25,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/historia', 'history@index')->name('historia');
+
+Route::resource('/dialog','DialogController');
+
 Route::resource('characters','CharacterController');
 Route::get('delete/{id}','CharacterController@destroy');Auth::routes();
 
