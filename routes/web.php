@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/historia', 'history@index')->name('historia');
 
-Route::resource('/dialog','DialogController');
+Route::resource('dialogs','DialogController');
 
 Route::resource('characters','CharacterController');
 Route::get('delete/{id}','CharacterController@destroy');Auth::routes();
@@ -40,6 +40,11 @@ Route::get('download_characters','CharacterController@pdf')->name('listcharacter
 Route::get('pdfview/{id}','CharacterController@pdfch');
 
 Route::get('/search', 'Api\SearchController@search')->name('api.search');
+
+Route::get('download_dialogs','DialogController@pdf')->name('listdialogs.pdf');
+//Route::get('characters_info','CharacterController@pdfch')->name('info.pdf');
+
+Route::get('pdfviewd/{id}','DialogController@pdfch');
 
 Route::group(['middleware' => 'auth'], function () {
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);
