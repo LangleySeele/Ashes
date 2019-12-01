@@ -15,4 +15,12 @@ class Dialog extends Model
     {
         return $this->belongsTo(Profession::class, 'ch_id', 'name');
     }
+    
+    public function scopeEscena($query, $escena)
+    {
+        if (trim($escena) != "")
+        {
+            $query->where(\DB::raw("CONCAT(escena, ' ', ch_id)"), "LIKE", "%$escena%");
+        }
+    }
 }
