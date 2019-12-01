@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Dialog Create')
 @section('content')
+
+@include('error')
 {!!Form::open(['route'=>'dialog.store','method'=>'POST','files'=>'true'])  !!}
 <!--<div class="from-group">
   {{Form::label('name','Nombre')}}
