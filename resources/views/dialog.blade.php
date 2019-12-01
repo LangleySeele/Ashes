@@ -2,7 +2,14 @@
 @section('title','dialogs')
 @section('content')
 @csrf
-		<div class="row">
+		{!! Form::open(['route' => 'dialogs.index', 'method' => 'GET', 
+		'class' => 'navbar-form navbar-left pull-right', 'role' => 'search']) !!}
+			<div class="form-group">
+				{!! Form::text('escena',null, ['class' => 'form-control', 'placeholder' => 'Buscar']) !!}
+			</div>
+			<button type="submit" class="btn btn-primary">Buscar</button>
+		{!! Form::close() !!}
+        <div class="row">
 		@foreach ($dialogs as $dialog )
 		<div class="col-sm">
 			<div class="card text-center " style="width: 18rem; margin-top: 70px;">
