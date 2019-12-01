@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TagStoreRequest;
+use App\Http\Requests\TagUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Character;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -14,10 +16,11 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $characters=Character::all();
+        //$characters=Character::all();
+        $characters=Character::name($request->get('name'))->orderBy('name', 'ASC')->paginate();
         return view( 'index',compact('characters'));
     }
 
@@ -38,7 +41,7 @@ class CharacterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagStoreRequest $request)
     {
         //
         //$character = new Character();
@@ -108,7 +111,7 @@ class CharacterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Character $character)
+    public function update(TagStoreRequest $request, Character $character)
     {
         //
         $character->fill($request->except('avatar'));
