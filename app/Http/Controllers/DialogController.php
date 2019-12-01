@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TagUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Dialog;
 use App\Character;
@@ -15,10 +16,11 @@ class DialogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $dialogs=Dialog::all();
+        //$dialogs=Dialog::all();
+        $dialogs=Dialog::escena($request->get('escena'))->orderBy('escena', 'ASC')->paginate();
         return view( 'dialog',compact('dialogs'));
     }
 
@@ -39,7 +41,7 @@ class DialogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagUpdateRequest $request)
     {
         $dialog= new Dialog();
         $dialog->escena=$request->input('escena');
@@ -62,7 +64,7 @@ class DialogController extends Controller
         //
         //return view('show');
         //$character=Character::find($id);
-        return view('show',compact('dialog'));
+        return view('showd',compact('dialog'));
         //return $character;
     }
 
@@ -75,7 +77,7 @@ class DialogController extends Controller
     public function edit(Dialog $dialog)
     {
         //
-        return view('edit',compact('dialog'));
+        return view('editd',compact('dialog'));
     }
 
     /**
@@ -85,9 +87,12 @@ class DialogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dialog $dialog)
+    public function update(TagUpdateRequest $request, Dialog $dialog)
     {
         //
+        $dialog->fill($request->all());
+        $dialog->save( );
+        return "update";
         //$dialog->fill($request->except('avatar'));
         //if ($request->hasFile('avatar')){
             //$file=$request->file('avatar');
@@ -118,18 +123,19 @@ class DialogController extends Controller
         
     }
 
-    /**public function pdf()
+    public function pdf()
     {
-        $characters=Character::all();
-        $pdf=PDF::loadView('pdf.listcharacters', compact('characters'));
+        $dialogs=Dialog::all();
+        $pdf=PDF::loadView('pdf.listdialogs', compact('dialogs'));
         //$pdf->save(storage_path().'_filename.pdf');
-        return $pdf->download('Characters.pdf');
+        return $pdf->download('Dialogs.pdf');
     }
 
-    public function pdfch(Character $id)
+    public function pdfch(Dialog $id)
     {
-        $pdf=PDF::loadView('pdf.info',['character'=>$id]);
-        return $pdf->download('info.pdf');
-    }**/
+        $pdf=PDF::loadView('pdf.infod',['dialog'=>$id]);
+        return $pdf->download('infod.pdf');
+    }
 }
+
 
