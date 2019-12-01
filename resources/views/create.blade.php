@@ -2,6 +2,8 @@
 @section('title', 'Characters Create')
 @section('content')
 
+@include('error')
+
 {!!Form::open(['route'=>'characters.store','method'=>'POST','files'=>'true'])  !!}
 <!--<div class="from-group">
   {{Form::label('name','Nombre')}}
